@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1QD6K0N9NL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-1QD6K0N9NL');
+    </script>
+
+    <!-- SEO 設定 -->
+    <title>Nano-Banana-Pro 提示詞資源畫廊</title>
+    <meta name="description" content="Nano-Banana-Pro 是一個高品質 AI 繪圖提示詞 (Prompts) 資源庫，提供一鍵複製與靈感搜尋。">
+    <meta name="keywords" content="AI, Prompt, Stable Diffusion, Midjourney, AI Art, 提示詞, 生成式AI, Nano-Banana-Pro">
+    <meta name="author" content="茶米老師教室">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nnbnn.netlify.app/">
+    <meta property="og:title" content="Nano-Banana-Pro 提示詞大全">
+    <meta property="og:description" content="探索高品質 AI 繪圖提示詞，一鍵複製與分享。">
+    <meta property="og:image" content="https://duk.tw/OXlGCx.png">
+    <meta property="og:site_name" content="Nano-Banana-Pro">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://nnbnn.netlify.app/">
+    <meta name="twitter:title" content="Nano-Banana-Pro 提示詞大全">
+    <meta name="twitter:description" content="探索高品質 AI 繪圖提示詞，一鍵複製與分享。">
+    <meta name="twitter:image" content="https://duk.tw/OXlGCx.png">
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍌</text></svg>">
+
+    <!-- 載入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            bg: '#0f172a',
+                            card: '#1e293b',
+                            border: '#334155',
+                            text: '#e2e8f0'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 3px; }
+        .dark ::-webkit-scrollbar-thumb { background-color: #475569; }
+        ::-webkit-scrollbar-track { background-color: transparent; }
+        .loader {
+            border: 3px solid #e2e8f0; border-top: 3px solid #6366f1; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite;
+        }
+        .dark .loader { border-color: #334155; border-top-color: #818cf8; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .card-hover:hover { transform: translateY(-4px); }
+        
+        /* Modal 動畫 */
+        .modal-enter { opacity: 0; transform: scale(0.95); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 0.2s ease, transform 0.2s ease; }
+        .modal-exit { opacity: 0; transform: scale(0.95); transition: opacity 0.2s ease, transform 0.2s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-dark-bg dark:text-dark-text transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- 頂部導覽列 -->
+    <header class="bg-white/90 dark:bg-dark-card/90 backdrop-blur-md border-b border-gray-200 dark:border-dark-border sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row justify-between items-center gap-4">
+            
+            <!-- Logo -->
+            <a href="#" onclick="navigateToHome(event)" class="flex items-center gap-3 group select-none">
+                <span class="text-2xl transform group-hover:scale-110 transition-transform duration-200">🍌</span>
+                <h1 class="text-lg font-bold text-gray-800 dark:text-white tracking-tight group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    Nano-Banana-Pro
+                </h1>
+            </a>
+
+            <!-- 工具列 -->
+            <div id="gallery-toolbar" class="flex flex-wrap items-center justify-center md:justify-end gap-3 w-full md:w-auto transition-all duration-300">
+                <select id="filter-select" class="px-3 py-2 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-dark-border text-sm rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none cursor-pointer hover:bg-white dark:hover:bg-slate-700 w-full md:w-40 text-gray-700 dark:text-gray-200">
+                    <option value="all">🏷️ 所有標籤</option>
+                </select>
+                <div class="relative w-full md:w-64">
+                    <input type="text" id="search-input" placeholder="搜尋提示詞、標題、標籤..."
+                           class="w-full pl-9 pr-4 py-2 bg-gray-100 dark:bg-slate-800 border-transparent dark:border-dark-border border text-sm rounded-full focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-gray-700 dark:text-gray-200">
+                    <svg class="absolute left-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <button onclick="toggleSort()" class="p-2 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-dark-border rounded-lg hover:bg-white dark:hover:bg-slate-700 transition-colors" title="切換排序">
+                    <svg id="sort-icon" class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
+                </button>
+                <button onclick="toggleTheme()" class="p-2 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-dark-border rounded-lg hover:bg-white dark:hover:bg-slate-700 transition-colors text-yellow-500 dark:text-yellow-400">
+                    <svg id="theme-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+            </div>
+
+            <!-- 單頁工具列 -->
+            <div id="single-toolbar" class="hidden flex items-center justify-end w-full md:w-auto">
+                 <button onclick="toggleTheme()" class="mr-3 p-2 bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-dark-border rounded-lg hover:bg-white dark:hover:bg-slate-700 transition-colors text-yellow-500 dark:text-yellow-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+                <button onclick="navigateToHome()" class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    返回畫廊
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主內容 -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 畫廊模式 -->
+        <div id="gallery-view" class="space-y-8 animate-fade-in">
+            <div id="item-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+            
+            <!-- 分頁控制項 -->
+            <div id="pagination" class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 pb-8 border-t border-gray-200 dark:border-dark-border pt-6 hidden">
+                <!-- 每頁筆數選擇 -->
+                <div class="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <span>每頁顯示:</span>
+                    <select id="per-page-select" onchange="changeItemsPerPage(this.value)" class="bg-white dark:bg-slate-800 border border-gray-200 dark:border-dark-border rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer text-gray-700 dark:text-gray-200">
+                        <option value="12">12</option>
+                        <option value="24" selected>24</option>
+                        <option value="36">36</option>
+                        <option value="48">48</option>
+                        <option value="60">60</option>
+                        <option value="96">96</option>
+                    </select>
+                    <span>筆</span>
+                    <span class="ml-2 text-xs text-gray-400"> (共 <span id="total-items-count">0</span> 筆)</span>
+                </div>
+
+                <!-- 頁碼導覽 -->
+                <div class="flex items-center gap-2">
+                    <button onclick="goToPage(1)" id="btn-first" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-gray-600 dark:text-gray-300 transition-colors" title="第一頁">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
+                    </button>
+                    <button onclick="goToPage(state.currentPage - 1)" id="btn-prev" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-gray-600 dark:text-gray-300 transition-colors" title="上一頁">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    
+                    <span class="text-sm font-mono text-gray-600 dark:text-gray-400 px-2 select-none">
+                        第 <span id="page-display" class="font-bold text-gray-900 dark:text-white mx-1">1</span> / <span id="total-pages" class="mx-1">1</span> 頁
+                    </span>
+
+                    <button onclick="goToPage(state.currentPage + 1)" id="btn-next" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-gray-600 dark:text-gray-300 transition-colors" title="下一頁">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                    <button onclick="goToPage('last')" id="btn-last" class="p-2 rounded hover:bg-gray-100 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-gray-600 dark:text-gray-300 transition-colors" title="最後一頁">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="loading-state" class="flex flex-col items-center py-10 gap-3">
+                <div class="loader"></div>
+                <p class="text-sm text-gray-400">正在讀取資料...</p>
+            </div>
+            <div id="empty-state" class="hidden flex flex-col items-center py-20 text-gray-400">
+                <svg class="w-16 h-16 mb-4 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <p>找不到相符的作品</p>
+            </div>
+        </div>
+
+        <!-- 單頁模式 -->
+        <div id="single-view" class="hidden animate-slide-up w-full">
+            <div class="max-w-6xl mx-auto bg-white dark:bg-dark-card rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-dark-border flex flex-col lg:flex-row min-h-[500px]">
+                <div class="lg:w-2/3 bg-gray-100 dark:bg-gray-900 relative group flex items-center justify-center p-4 min-h-[300px]">
+                    <img id="single-image" src="" class="max-w-full max-h-[80vh] object-contain shadow-lg rounded-lg z-10" alt="Artwork">
+                    <div class="absolute bottom-6 right-6 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                         <a id="download-btn" href="#" download="image.png" target="_blank" class="p-2 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-colors" title="下載圖片">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        </a>
+                        <button onclick="openLightbox()" class="p-2 bg-black/50 hover:bg-black/70 text-white rounded-full backdrop-blur-sm transition-colors" title="全螢幕查看">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:w-1/3 p-6 lg:p-8 flex flex-col border-l border-gray-200 dark:border-dark-border bg-white dark:bg-dark-card overflow-y-auto max-h-[85vh]">
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <div id="single-tags" class="flex flex-wrap gap-1">
+                                <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold rounded-full">Tag</span>
+                            </div>
+                            <span id="single-id" class="text-xs text-gray-400 font-mono">#000</span>
+                        </div>
+                        <h2 id="single-title" class="text-2xl font-bold text-gray-900 dark:text-white leading-tight mb-2">標題</h2>
+                        <div class="flex items-center justify-between mt-2">
+                             <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+                                <span>By</span>
+                                <span id="single-author" class="font-medium text-gray-700 dark:text-gray-300">Author</span>
+                            </div>
+                            <div class="flex items-center gap-1 text-xs text-gray-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                <span id="single-clicks">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-grow mb-6">
+                        <label class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Prompt</label>
+                        <div class="bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-gray-200 dark:border-dark-border p-4 h-48 lg:h-64 overflow-y-auto relative group/prompt">
+                            <p id="single-prompt" class="text-sm text-gray-600 dark:text-gray-300 font-mono leading-relaxed whitespace-pre-wrap break-words select-text">提示詞內容...</p>
+                            <button onclick="copySinglePrompt()" class="absolute top-2 right-2 p-1.5 bg-white dark:bg-slate-700 text-gray-500 hover:text-indigo-600 rounded-md shadow-sm border border-gray-200 dark:border-gray-600 opacity-0 group-hover/prompt:opacity-100 transition-opacity" title="複製提示詞">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v2M8 7h2m-2 0h2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-auto space-y-4">
+                        <button onclick="copySinglePrompt()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v2M8 7h2m-2 0h2"></path></svg>
+                            複製提示詞
+                        </button>
+                        <div class="grid grid-cols-2 gap-3">
+                             <button onclick="shareToSocial('copy')" class="py-2.5 bg-white dark:bg-slate-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-slate-600 transition-colors flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                                複製連結
+                            </button>
+                            <div class="flex gap-1">
+                                <button onclick="shareToSocial('line')" class="flex-1 bg-[#00C300] hover:bg-[#00b300] text-white rounded-lg flex items-center justify-center transition-colors" title="分享到 Line">
+                                    <span class="font-bold text-sm">Line</span>
+                                </button>
+                                <button onclick="shareToSocial('facebook')" class="flex-1 bg-[#1877F2] hover:bg-[#166fe5] text-white rounded-lg flex items-center justify-center transition-colors" title="分享到 Facebook">
+                                    <span class="font-bold text-sm">FB</span>
+                                </button>
+                                <button onclick="shareToSocial('twitter')" class="flex-1 bg-black hover:bg-gray-800 text-white rounded-lg flex items-center justify-center transition-colors" title="分享到 X">
+                                    <span class="font-bold text-sm">X</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8 text-center pb-8">
+                 <a href="#" onclick="navigateToHome(event)" class="text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 text-sm font-medium hover:underline flex items-center justify-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    返回畫廊
+                 </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- 頁腳 (包含版權連結) -->
+    <footer class="bg-white dark:bg-dark-card border-t border-gray-200 dark:border-dark-border py-6 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">© 2025 AI Prompt Gallery | Powered by Nano-Banana-Pro</p>
+            <button onclick="openDisclaimer()" class="text-xs text-gray-400 hover:text-indigo-500 hover:underline transition-colors flex items-center justify-center gap-1 mx-auto">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                ⚠️ 版權與使用聲明
+            </button>
+        </div>
+    </footer>
+
+    <!-- 版權聲明 Modal -->
+    <div id="disclaimer-modal" class="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity opacity-0" onclick="closeDisclaimer()">
+        <div class="bg-white dark:bg-dark-card w-full max-w-lg rounded-2xl shadow-2xl p-6 border border-gray-200 dark:border-gray-700 transform scale-95 transition-transform" onclick="event.stopPropagation()">
+            <div class="flex items-center gap-2 mb-4 text-amber-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <h3 class="text-lg font-bold text-gray-800 dark:text-white">使用與版權聲明</h3>
+            </div>
+            <div class="space-y-3 text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p>本站所有提示詞 (Prompts) 與範例圖片大部份由網路上整理而來，僅供學習與參考之用。</p>
+                <p>原始內容之版權均屬於原作者所有。我們致力於標註來源，但若有遺漏或錯誤，敬請見諒。</p>
+                <p class="pt-2 border-t border-gray-100 dark:border-gray-700">
+                    如果您是原創作者並希望主張權益，或希望我們標註/更正您的資料，請來信聯絡：
+                    <a href="mailto:gaminitwpro@gmail.com" class="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">gaminitwpro@gmail.com</a>
+                    ，我們將會盡速處理。
+                </p>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeDisclaimer()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors font-medium text-sm">
+                    我知道了
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 z-[60] bg-black/95 hidden flex items-center justify-center p-4 backdrop-blur-sm transition-opacity opacity-0" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-white/70 hover:text-white p-2" onclick="closeLightbox()">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+        <img id="lightbox-img" src="" class="max-w-full max-h-[90vh] object-contain rounded-md shadow-2xl" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- Toast 通知 -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-900/95 dark:bg-white/95 text-white dark:text-gray-900 px-6 py-3 rounded-full shadow-2xl z-[70] transition-all duration-300 opacity-0 translate-y-10 pointer-events-none flex items-center gap-2 border border-white/10 dark:border-gray-200">
+        <svg id="toast-icon" class="w-5 h-5 text-green-400 dark:text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span id="toast-msg" class="font-medium text-sm">操作成功</span>
+    </div>
+
+    <script>
+        // --- 設定區 ---
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSWAd6rL644IsXobHRsLtWHlA4jyAm4G0UfbTaIcnCThkEp6z8BLPFPf4YJc71oGUc3y8FvYBYEi1yR/pub?gid=1990597718&single=true&output=csv';
+        const BASE_IMG_URL = 'https://github.com/muset-ai/awesome-nano-banana-pro/raw/main/';
+        // 【重要】填入 GAS 網址以啟用點閱追蹤
+        const GAS_API_URL = 'https://script.google.com/macros/s/AKfycbxkHjkpQs9E4fUSDw7I1xozt9FGGVMIQ6YljOCHXYKZjMJf0fUMFbJooRO4x6a0Q2Dr/exec'; 
+        
+        const DEFAULT_SEO = {
+            title: 'Nano-Banana-Pro 提示詞資源畫廊',
+            desc: '探索、搜尋、複製並分享高品質的 AI 繪圖提示詞 (Prompts)。',
+            img: 'https://placehold.co/1200x630/1e293b/ffffff?text=Nano-Banana-Pro' 
+        };
+
+        let state = {
+            items: [],
+            filtered: [],
+            view: 'gallery', 
+            currentId: null,
+            sortBy: 'desc', 
+            loading: true,
+            currentPage: 1,
+            itemsPerPage: 24,
+            currentTotalPages: 1
+        };
+
+        const els = {
+            grid: document.getElementById('item-grid'),
+            galleryView: document.getElementById('gallery-view'),
+            singleView: document.getElementById('single-view'),
+            galleryToolbar: document.getElementById('gallery-toolbar'),
+            singleToolbar: document.getElementById('single-toolbar'),
+            loading: document.getElementById('loading-state'),
+            empty: document.getElementById('empty-state'),
+            searchInput: document.getElementById('search-input'),
+            filterSelect: document.getElementById('filter-select'),
+            lightbox: document.getElementById('lightbox'),
+            lightboxImg: document.getElementById('lightbox-img'),
+            toast: document.getElementById('toast'),
+            toastMsg: document.getElementById('toast-msg'),
+            singleImg: document.getElementById('single-image'),
+            singleTitle: document.getElementById('single-title'),
+            singleAuthor: document.getElementById('single-author'),
+            singlePrompt: document.getElementById('single-prompt'),
+            singleTags: document.getElementById('single-tags'),
+            singleId: document.getElementById('single-id'),
+            singleClicks: document.getElementById('single-clicks'),
+            downloadBtn: document.getElementById('download-btn'),
+            disclaimerModal: document.getElementById('disclaimer-modal'),
+            pagination: document.getElementById('pagination')
+        };
+
+        async function init() {
+            initTheme(); 
+            setupEvents();
+            await fetchData();
+            handleHashChange();
+            window.addEventListener('hashchange', handleHashChange);
+        }
+
+        async function fetchData() {
+            try {
+                const res = await fetch(CSV_URL);
+                if (!res.ok) throw new Error('Fetch failed');
+                const text = await res.text();
+                state.items = parseCSVRobust(text);
+                state.filtered = [...state.items];
+                state.loading = false;
+                render();
+            } catch (err) {
+                console.error(err);
+                els.loading.innerHTML = `<p class="text-red-500 bg-red-100 dark:bg-red-900/30 px-4 py-2 rounded-lg">載入資料失敗: ${err.message}</p>`;
+            }
+        }
+
+        function parseCSVRobust(text) {
+            const rows = [];
+            let currentRow = [];
+            let currentCell = '';
+            let insideQuote = false;
+            
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                const nextChar = text[i + 1];
+
+                if (char === '"') {
+                    if (insideQuote && nextChar === '"') {
+                        currentCell += '"'; 
+                        i++;
+                    } else {
+                        insideQuote = !insideQuote;
+                    }
+                } else if (char === ',' && !insideQuote) {
+                    currentRow.push(currentCell);
+                    currentCell = '';
+                } else if ((char === '\r' || char === '\n') && !insideQuote) {
+                    if (char === '\r' && nextChar === '\n') i++;
+                    currentRow.push(currentCell);
+                    if (currentRow.length > 0) rows.push(currentRow);
+                    currentRow = [];
+                    currentCell = '';
+                } else {
+                    currentCell += char;
+                }
+            }
+            if (currentCell || currentRow.length > 0) {
+                currentRow.push(currentCell);
+                rows.push(currentRow);
+            }
+
+            if (rows.length < 2) return [];
+            
+            const rawHeaders = rows[0].map(h => h.trim());
+            const findIdx = (keys) => rawHeaders.findIndex(h => keys.some(k => h.includes(k)));
+            
+            const idxId = findIdx(['No', '編號']);
+            const idxTitle = findIdx(['Title', '標題']);
+            const idxTags = findIdx(['Tags', '標籤', '分類', 'Type']); 
+            const idxPrompt = findIdx(['Prompt', '提示詞']);
+            const idxImg = findIdx(['Image', '圖片', '範例']);
+            const idxAuthor = findIdx(['Author', '作者']);
+            const idxSource = findIdx(['Source', '來源']);
+            const idxClicks = findIdx(['Clicks', '點閱', '點閱次數']);
+            // 讀取「是否顯示」欄位
+            const idxVisible = findIdx(['Visible', '顯示', '是否顯示']);
+
+            const data = [];
+            
+            for(let i=1; i<rows.length; i++) {
+                const row = rows[i];
+                if(row.length < 3) continue;
+
+                const rawId = idxId !== -1 ? row[idxId] : row[0];
+                const id = parseInt(String(rawId).replace(/\D/g, ''));
+                
+                if(!id || isNaN(id) || id <= 0) continue;
+
+                // 處理顯示狀態 (預設為 true，除非明確寫 false/0/no/不顯示)
+                let isVisible = true;
+                if (idxVisible !== -1) {
+                    const val = String(row[idxVisible]).trim().toUpperCase();
+                    // 支援全大寫 TRUE/FALSE，這裡只要不是 FALSE 等否定詞就視為顯示
+                    if (val === 'FALSE' || val === '0' || val === 'NO' || val === '不顯示') {
+                        isVisible = false;
+                    }
+                }
+
+                let img = idxImg !== -1 ? row[idxImg] : row[4] || '';
+                if(img && !img.startsWith('http')) img = BASE_IMG_URL + img;
+
+                data.push({
+                    id: id,
+                    title: (idxTitle !== -1 ? row[idxTitle] : row[1]) || '未命名',
+                    tags: (idxTags !== -1 ? row[idxTags] : row[2]) || '未分類',
+                    prompt: (idxPrompt !== -1 ? row[idxPrompt] : row[3]) || '',
+                    image: img,
+                    author: (idxAuthor !== -1 ? row[idxAuthor] : row[6]) || 'Anonymous',
+                    source: (idxSource !== -1 ? row[idxSource] : row[7]) || '',
+                    clicks: idxClicks !== -1 ? (parseInt(String(row[idxClicks]).replace(/\D/g, '')) || 0) : 0,
+                    visible: isVisible
+                });
+            }
+            return data.sort((a,b) => b.id - a.id);
+        }
+
+        async function trackClick(id) {
+            if (!GAS_API_URL) return;
+            
+            // 樂觀更新 (Optimistic Update)：先更新前端，再發送請求
+            const item = state.items.find(i => i.id == id);
+            if (item) {
+                item.clicks = (item.clicks || 0) + 1;
+                // 如果目前在單頁模式，立即更新顯示數字
+                if (els.singleClicks) els.singleClicks.textContent = item.clicks;
+            }
+
+            try {
+                // 發送請求，不等待結果
+                fetch(`${GAS_API_URL}?id=${id}`); 
+            } catch (error) {
+                console.error("點閱追蹤失敗:", error);
+                // 可選：若失敗要回滾數字可在此處理，但對於點閱數通常不需要這麼嚴格
+            }
+        }
+
+        function updateSEOTags(title, desc, img, url = window.location.href) {
+            document.title = title;
+            updateMetaContent('description', desc);
+            updateLinkHref('canonical', url);
+            updateMetaContent('og:title', title, 'property');
+            updateMetaContent('og:description', desc, 'property');
+            updateMetaContent('og:image', img, 'property');
+            updateMetaContent('og:url', url, 'property');
+            updateMetaContent('twitter:title', title, 'property');
+            updateMetaContent('twitter:description', desc, 'property');
+            updateMetaContent('twitter:image', img, 'property');
+            updateMetaContent('twitter:url', url, 'property');
+        }
+
+        function updateMetaContent(nameOrProperty, content, attr = 'name') {
+            let element = document.querySelector(`meta[${attr}="${nameOrProperty}"]`);
+            if (!element) {
+                element = document.createElement('meta');
+                element.setAttribute(attr, nameOrProperty);
+                document.head.appendChild(element);
+            }
+            element.setAttribute('content', content);
+        }
+
+        function updateLinkHref(rel, href) {
+            let element = document.querySelector(`link[rel="${rel}"]`);
+            if (!element) {
+                element = document.createElement('link');
+                element.setAttribute('rel', rel);
+                document.head.appendChild(element);
+            }
+            element.setAttribute('href', href);
+        }
+
+        function handleHashChange() {
+            const hash = window.location.hash;
+            if (hash.startsWith('#id=')) {
+                const rawId = hash.split('=')[1];
+                const id = parseInt(rawId);
+                
+                if (id && !isNaN(id)) {
+                    if(state.loading) {
+                        const check = setInterval(() => {
+                            if(!state.loading) {
+                                clearInterval(check);
+                                attemptShowSingleView(id);
+                            }
+                        }, 100);
+                    } else {
+                        attemptShowSingleView(id);
+                    }
+                } else {
+                    showGalleryView();
+                }
+            } else {
+                showGalleryView();
+            }
+        }
+
+        function attemptShowSingleView(id) {
+            const item = state.items.find(i => i.id == id);
+            if (item && item.visible) {
+                showSingleView(item);
+                trackClick(id); // 呼叫點閱追蹤
+            } else {
+                showToast('找不到作品或該作品已隱藏: ' + id, 'error');
+                showGalleryView();
+            }
+        }
+
+        function navigateToHome(e) {
+            if(e) e.preventDefault();
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+            handleHashChange(); 
+        }
+
+        function navigateToItem(id) {
+            window.location.hash = `#id=${id}`;
+        }
+
+        function showGalleryView() {
+            state.view = 'gallery';
+            state.currentId = null;
+            let homeImage = DEFAULT_SEO.img;
+            const firstVisible = state.items.find(i => i.visible);
+            if (firstVisible) homeImage = firstVisible.image;
+
+            updateSEOTags(DEFAULT_SEO.title, DEFAULT_SEO.desc, homeImage);
+
+            els.galleryView.classList.remove('hidden');
+            els.singleView.classList.add('hidden');
+            els.galleryToolbar.classList.remove('hidden');
+            els.singleToolbar.classList.add('hidden');
+            window.scrollTo({top: 0});
+        }
+
+        function showSingleView(item) {
+            state.view = 'single';
+            state.currentId = item.id;
+            
+            const pageTitle = `${item.title} - AI Prompt by ${item.author}`;
+            const pageDesc = `查看 ${item.author} 創作的 AI 繪圖作品「${item.title}」。標籤：${item.tags}。`;
+            
+            updateSEOTags(pageTitle, pageDesc, item.image, window.location.href);
+
+            els.singleImg.src = item.image;
+            els.singleTitle.textContent = item.title;
+            
+            if (item.source) {
+                els.singleAuthor.innerHTML = `<a href="${item.source}" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline transition-colors flex items-center gap-1">@${item.author} <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg></a>`;
+            } else {
+                els.singleAuthor.textContent = item.author;
+            }
+
+            els.singlePrompt.textContent = item.prompt;
+            els.singleId.textContent = `#${item.id}`;
+            els.singleClicks.textContent = item.clicks || 0;
+            els.downloadBtn.href = item.image;
+            
+            els.singleTags.innerHTML = '';
+            const tags = item.tags.split(/[,|/]/).map(t => t.trim()).filter(Boolean);
+            tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold rounded-full';
+                span.textContent = tag;
+                els.singleTags.appendChild(span);
+            });
+
+            els.galleryView.classList.add('hidden');
+            els.singleView.classList.remove('hidden');
+            els.galleryToolbar.classList.add('hidden');
+            els.singleToolbar.classList.remove('hidden');
+            window.scrollTo({top: 0});
+        }
+
+        function render() {
+            if (state.loading) return;
+
+            let displayItems = state.items.filter(item => {
+                if (!item.visible) return false;
+
+                const search = els.searchInput.value.toLowerCase();
+                const filterTag = els.filterSelect.value;
+                
+                const matchSearch = item.title.toLowerCase().includes(search) || 
+                                  item.prompt.toLowerCase().includes(search) ||
+                                  item.author.toLowerCase().includes(search) ||
+                                  item.tags.toLowerCase().includes(search);
+                
+                let matchType = true;
+                if (filterTag !== 'all') {
+                    const itemTags = item.tags.split(/[,|/]/).map(t => t.trim());
+                    matchType = itemTags.includes(filterTag);
+                }
+                
+                return matchSearch && matchType;
+            });
+
+            if (state.sortBy === 'asc') displayItems.sort((a,b) => a.id - b.id);
+            else displayItems.sort((a,b) => b.id - a.id);
+
+            els.loading.classList.add('hidden');
+            els.grid.innerHTML = '';
+            
+            if (displayItems.length === 0) {
+                els.empty.classList.remove('hidden');
+                els.pagination.classList.add('hidden');
+                return;
+            }
+            els.empty.classList.add('hidden');
+
+            if(els.filterSelect.options.length <= 1) {
+                const allTags = new Set();
+                state.items.filter(i => i.visible).forEach(i => {
+                    const tags = i.tags.split(/[,|/]/).map(t => t.trim()).filter(Boolean);
+                    tags.forEach(t => allTags.add(t));
+                });
+                
+                [...allTags].sort().forEach(t => {
+                    const opt = document.createElement('option');
+                    opt.value = t;
+                    opt.textContent = t;
+                    els.filterSelect.appendChild(opt);
+                });
+            }
+
+            const totalItems = displayItems.length;
+            const totalPages = Math.ceil(totalItems / state.itemsPerPage) || 1;
+            state.currentTotalPages = totalPages;
+
+            if (state.currentPage > totalPages) state.currentPage = totalPages;
+            if (state.currentPage < 1) state.currentPage = 1;
+
+            const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+            const endIndex = startIndex + state.itemsPerPage;
+            const paginatedItems = displayItems.slice(startIndex, endIndex);
+
+            const frag = document.createDocumentFragment();
+            paginatedItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white dark:bg-dark-card rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-dark-border card-hover transition-all duration-300 flex flex-col h-full group';
+                
+                const primaryTag = item.tags.split(/[,|/]/)[0].trim() || '未分類';
+                
+                const allTags = item.tags.split(/[,|/]/).map(t => t.trim()).filter(Boolean);
+                const tagsHtml = allTags.length > 0 
+                    ? allTags.map(tag => `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 whitespace-nowrap">${tag}</span>`).join('')
+                    : '<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">未分類</span>';
+                
+                const authorHtml = item.source 
+                    ? `<a href="${item.source}" target="_blank" class="hover:text-indigo-600 dark:hover:text-indigo-400 hover:underline transition-colors relative z-20" onclick="event.stopPropagation()">@${item.author}</a>`
+                    : `@${item.author}`;
+
+                card.innerHTML = `
+                    <div class="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-slate-800 relative cursor-pointer" onclick="navigateToItem(${item.id})">
+                        <img src="${item.image}" loading="lazy" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x400?text=No+Image'">
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors"></div>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-2 gap-2">
+                            <div class="flex flex-wrap gap-1.5 overflow-hidden max-h-[3.5rem]">
+                                ${tagsHtml}
+                            </div>
+                            <span class="text-xs text-gray-400 font-mono shrink-0 pt-0.5">#${item.id}</span>
+                        </div>
+
+                        <h3 class="font-bold text-gray-800 dark:text-gray-100 mb-1 line-clamp-1" title="${item.title}">${item.title}</h3>
+                        
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mb-3">${authorHtml}</p>
+                        
+                        <div class="bg-slate-50 dark:bg-slate-800/50 p-2 rounded border border-gray-100 dark:border-dark-border mb-3 flex-grow h-16 overflow-hidden">
+                            <p class="text-xs text-gray-600 dark:text-gray-400 font-mono line-clamp-2 break-all">${item.prompt}</p>
+                        </div>
+
+                        <div class="flex items-center justify-between mt-auto mb-3">
+                            <div class="flex items-center gap-1 text-xs text-gray-400 dark:text-gray-500">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                <span>${item.clicks || 0}</span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="copyText(event, '${item.prompt.replace(/'/g, "\\'")}')" class="py-1.5 px-3 bg-white dark:bg-slate-700 border border-gray-200 dark:border-gray-600 rounded text-xs font-bold text-gray-600 dark:text-gray-200 hover:text-indigo-600 hover:border-indigo-200 transition-colors flex items-center justify-center gap-1">
+                                複製
+                            </button>
+                            <button onclick="navigateToItem(${item.id})" class="py-1.5 px-3 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 transition-colors flex items-center justify-center gap-1">
+                                分享
+                            </button>
+                        </div>
+                    </div>
+                `;
+                frag.appendChild(card);
+            });
+            els.grid.appendChild(frag);
+            updatePaginationUI(totalPages, totalItems);
+        }
+
+        function updatePaginationUI(totalPages, totalCount) {
+            const paginationEl = els.pagination;
+            if (!paginationEl) return;
+
+            if (totalCount === 0) {
+                paginationEl.classList.add('hidden');
+                return;
+            }
+            paginationEl.classList.remove('hidden');
+
+            document.getElementById('page-display').textContent = state.currentPage;
+            document.getElementById('total-pages').textContent = totalPages;
+            document.getElementById('total-items-count').textContent = totalCount;
+
+            document.getElementById('btn-first').disabled = state.currentPage === 1;
+            document.getElementById('btn-prev').disabled = state.currentPage === 1;
+            document.getElementById('btn-next').disabled = state.currentPage === totalPages;
+            document.getElementById('btn-last').disabled = state.currentPage === totalPages;
+        }
+
+        function changeItemsPerPage(val) {
+            state.itemsPerPage = parseInt(val);
+            state.currentPage = 1;
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToPage(page) {
+            if (page === 'last') {
+                state.currentPage = state.currentTotalPages;
+            } else {
+                state.currentPage = page;
+            }
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleSort() {
+            state.sortBy = state.sortBy === 'desc' ? 'asc' : 'desc';
+            render();
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            updateThemeIcon(isDark);
+        }
+
+        function initTheme() {
+            const saved = localStorage.getItem('theme');
+            const isDark = saved === null ? true : saved === 'dark';
+            if(isDark) document.documentElement.classList.add('dark');
+            else document.documentElement.classList.remove('dark');
+            updateThemeIcon(isDark);
+        }
+
+        function updateThemeIcon(isDark) {
+            const iconContent = isDark 
+                ? '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>' 
+                : '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>';
+            document.querySelectorAll('#theme-icon').forEach(el => el.innerHTML = iconContent);
+        }
+
+        function setupEvents() {
+            els.searchInput.addEventListener('input', () => {
+                state.currentPage = 1; // Reset to page 1 on search
+                render();
+            });
+            els.filterSelect.addEventListener('change', () => {
+                state.currentPage = 1; // Reset to page 1 on filter
+                render();
+            });
+        }
+
+        function copyText(e, text) {
+            if(e) e.stopPropagation();
+            if(!text) return;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已複製到剪貼簿');
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('已複製到剪貼簿');
+            });
+        }
+
+        function copySinglePrompt() {
+            const item = state.items.find(i => i.id == state.currentId);
+            if(item) copyText(null, item.prompt);
+        }
+
+        function shareToSocial(platform) {
+            const isPreview = window.location.protocol === 'blob:' || window.location.protocol === 'file:';
+            const url = window.location.href;
+            const item = state.items.find(i => i.id == state.currentId);
+            const text = item ? `Nano-Banana-Pro 作品分享: ${item.title}` : 'Check this out!';
+
+            if (platform === 'copy') {
+                if (isPreview) {
+                    alert("提示：預覽模式下複製的連結無法分享給他人。請部署後再使用。");
+                }
+                copyText(null, url);
+                showToast('連結已複製');
+            } else {
+                if (isPreview) {
+                    alert("預覽模式下無法直接使用分享按鈕，請先部署網站。");
+                    return;
+                }
+                if (platform === 'line') window.open(`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}`, '_blank');
+                else if (platform === 'facebook') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+                else if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+            }
+        }
+
+        function showToast(msg, type='success') {
+            els.toastMsg.textContent = msg;
+            const icon = document.getElementById('toast-icon');
+            if(type === 'error') {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>';
+                icon.classList.remove('text-green-400');
+                icon.classList.add('text-red-400');
+            } else {
+                icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>';
+                icon.classList.remove('text-red-400');
+                icon.classList.add('text-green-400');
+            }
+            els.toast.classList.remove('opacity-0', 'translate-y-10');
+            setTimeout(() => {
+                els.toast.classList.add('opacity-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        function openLightbox() {
+            const item = state.items.find(i => i.id == state.currentId);
+            if(!item) return;
+            els.lightboxImg.src = item.image;
+            els.lightbox.classList.remove('hidden');
+            void els.lightbox.offsetWidth;
+            els.lightbox.classList.remove('opacity-0');
+        }
+
+        function closeLightbox() {
+            els.lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                els.lightbox.classList.add('hidden');
+            }, 300);
+        }
+
+        // --- 版權聲明 Modal 控制 ---
+        function openDisclaimer() {
+            const modal = els.disclaimerModal;
+            const content = modal.querySelector('div');
+            
+            modal.classList.remove('hidden');
+            // Force repaint
+            void modal.offsetWidth;
+            
+            modal.classList.remove('opacity-0');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeDisclaimer() {
+            const modal = els.disclaimerModal;
+            const content = modal.querySelector('div');
+            
+            modal.classList.add('opacity-0');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200); 
+        }
+
+        // Start
+        window.onload = init;
+
+    </script>
+</body>
+</html>
